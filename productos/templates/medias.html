@@ -1,0 +1,29 @@
+{% extends 'productos/base.html' %}
+{% block title %} Medias {% endblock %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-5">Medias</h1>
+    <div class="row">
+        {% for media in medias %}
+        <div class="col-3 sm-1 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="{% url 'detalle' media.id %}">
+                        <img src="{{ media.imagen.url }}" class="card-img-top">
+                    </a>
+                    <h5>{{ media.nombre }}</h5>
+                    <h6>${{ media.precio }}</h6>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'agregar' producto_id=media.id %}">
+                    <button class="btn-success btn-block mx-auto"><i class="fas fa-shopping-cart"></i></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'carrito/base.html' %}
+{% block title %} Carrito {% endblock %}
+{% load static %}
+{% load tags_extra %}
+{% block content %}
+<div class="container my-3">
+    <a href="{% url 'inicio' %}" class="d-inline float-left btn btn-outline-info">Seguir comprando</a>
+    <a href="{% url 'limpiar' %}" class="d-inline float-right btn btn-danger-info">Vaciar carrito</a>
+</div>
+<div class="container text-center mx-auto">  
+    <h2 class="text-center my-5">Mi carrito</h2>
+    <table class="table table-bordered mx-auto">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Suma</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if request.session.carro.items %}
+                {% for key, value in request.session.carro.items %}
+                    <tr class="text-center">
+                        <td>{{ value.nombre }}</td>
+                        <td>
+                            <a href="{% url 'agregar' value.producto_id %}" class="btn btn-sm btn-info">+</a>
+                            {{ value.cantidad }}
+                            <a href="{% url 'restar' value.producto_id %}" class="btn btn-sm btn-danger">-</a>
+                            <a href="{% url 'eliminar' value.producto_id %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                        </td>
+                        <td>${{ value.precio }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}    
+                <tr>
+                    <td colspan="3">
+                        <div class="alert alert-danger text-center">Sin productos</div>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table> 
+</div>
+
+<h4 style="margin-left: 8%;">Total a pagar: ${{ importe_total }}</h4>
+
+<button class="btn btn-success float-right" style="margin-right: 8%;">Finalizar compra</button>
+<br>
+
+{% endblock %}

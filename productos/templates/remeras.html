@@ -1,0 +1,28 @@
+{% extends 'productos/base.html' %}
+{% block title %} Remeras {% endblock %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-5">Remeras</h1>
+    <div class="row">
+        {% for remera in remeras %}
+        <div class="col-3 sm-1 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <a href="{% url 'detalle' remera.id %}">
+                        <img src="{{ remera.imagen.url }}" class="card-img-top">
+                    </a>
+                    <h5>{{ remera.nombre }}</h5>
+                    <h6>${{ remera.precio }}</h6>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'agregar' producto_id=remera.id %}">
+                    <button class="btn-success btn-block mx-auto"><i class="fas fa-shopping-cart"></i></button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
